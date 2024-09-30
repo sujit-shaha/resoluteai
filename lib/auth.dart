@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:resoluteai/pages/email_otp.dart';
 import 'package:resoluteai/pages/home_screen.dart';
+import 'package:resoluteai/pages/sign_up.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -31,43 +33,20 @@ class _AuthScreenState extends State<AuthScreen> {
 
     try {
       UserCredential userCredential;
-      if (_isLogin) {
+
         userCredential = await _firebaseAuth.signInWithEmailAndPassword(
           email: _email,
           password: _password,
         );
 
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: ((ctx) => OtpScreen(emailId: _email)),
             ),
           );
 
-      } else {
-        userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
-          email: _email,
-          password: _password,
-        );
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Icon(Icons.check_circle, color: Colors.green, size: 50),
-            content: Text('Account created successfully'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _isLogin=!_isLogin;
-                  });
-                  // Navigator.push(context, MaterialPageRoute(builder: (ctx)=>AuthScreen2()));
-                },
-                child: Text('OK'),
-              ),
-            ],
-          ),
-        );
-      }
+
       print(userCredential);
     } on FirebaseAuthException catch (error) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -82,9 +61,9 @@ class _AuthScreenState extends State<AuthScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.redAccent,
         centerTitle: true,
-        title: const Text("Hiring master"),
+        title: const Text("Resolute AI"),
       ),
       backgroundColor: Colors.white,
       body: Center(
@@ -94,7 +73,7 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(
                 height: 150,
                 child: Image.asset(
-                  _isLogin ? 'assets/login.png' : 'assets/signup.png',
+                  'assets/img.png',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -147,19 +126,18 @@ class _AuthScreenState extends State<AuthScreen> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           // primary: Colors.blue,
+                          backgroundColor: Colors.redAccent
                         ),
                         onPressed: _submitForm,
                         child: Text(_isLogin ? 'Login' : 'Sign Up'),
                       ),
                       TextButton(
                         onPressed: () {
-                          setState(() {
-                            _isLogin = !_isLogin;
-                          });
+                          Navigator.push(context, MaterialPageRoute(builder: (ctx) => SignupScreen()));
                         },
                         child: Text(_isLogin ? 'Create an account' : 'I already have an account',
                           style: TextStyle(
-                            color: Colors.blue,
+                            color: Colors.redAccent,
                           ),
                         ),
                       ),

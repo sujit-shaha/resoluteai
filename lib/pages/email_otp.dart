@@ -100,7 +100,7 @@ class _OtpScreenState extends State<OtpScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Card(
-              color: Colors.teal,
+              color: Colors.redAccent,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -168,7 +168,7 @@ class _OtpScreenState extends State<OtpScreen> {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setBool('loggedIn', true);
 
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                               builder: (ctx) => HomeScreen(),
