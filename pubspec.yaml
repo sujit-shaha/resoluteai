@@ -40,6 +40,9 @@ dependencies:
   flutter_webrtc: ^0.9.12
   flutter_webrtc_wrapper: ^1.0.2
   uuid: ^4.5.1
+  firebase_core: ^3.6.0
+  email_otp: ^2.1.2
+  firebase_auth: ^5.3.1
 
 dev_dependencies:
   flutter_test:
